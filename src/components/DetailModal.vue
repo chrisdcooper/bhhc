@@ -19,7 +19,7 @@
           </b-row>
           <b-row class="detailrow">
             <b-col>
-              <label class="lbldetail">Description:</label>
+              <label class="lbldetail">Reason:</label>
               {{description}}
             </b-col>
           </b-row>

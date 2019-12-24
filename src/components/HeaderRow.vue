@@ -20,13 +20,10 @@ export default {
     name:"HeaderRow",
     props:{
         username:String,
-        horizontalheadericonurl:String,
-        horizontalheadericonhovurl:String,
         horizontalheadericontop:String,
         horizontalheadericonleft:String,
         horizontalheadericonwidth:String,
         horizontalheadericonheight:String,
-        horizontalheaderverbiageurl:String,
         horizontalheaderverbiagetop:String,
         horizontalheaderverbiageleft:String,
         horizontalheaderverbiagewidth:String,
@@ -40,7 +37,6 @@ export default {
             '--horizontal-icon-left': this.horizontalheadericonleft,
             '--horizontal-icon-width': this.horizontalheadericonwidth,
             '--horizontal-icon-height': this.horizontalheadericonheight,
-            '--horizontal-verbiage': this.horizontalheaderverbiageurl,
             '--horizontal-verbiage-top': this.horizontalheaderverbiagetop,
             '--horizontal-verbiage-left': this.horizontalheaderverbiageleft,
             '--horizontal-verbiage-height': this.horizontalheaderverbiageheight,
@@ -79,7 +75,7 @@ left:var(--horizontal-verbiage-left);
 z-index: 2000;
 height: var(--horizontal-verbiage-height);
 width: var(--horizontal-verbiage-width);
-background: var(--horizontal-verbiage);
+background: url('../assets/bhhc.png');
 background-position:left top;
 background-repeat:  no-repeat;}
 }

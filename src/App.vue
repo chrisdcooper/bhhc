@@ -34,7 +34,7 @@ $ag-row-hover: #e9f6ff;
             aria-describedby="input-live-feedback"
             v-on:input="externalFilterChanged"
             ref="inpsearch"
-            placeholder="Search by: Id | Category | Value"
+            placeholder="Search by: Id | Category | Keyword | Reason"
             trim
           ></b-form-input>
           <b-form-invalid-feedback id="input-live-feedback">Enter at least 2 letters</b-form-invalid-feedback>
@@ -95,19 +95,31 @@ export default {
       username: "Christopher Cooper",
       searchinputmodel: "",
       coredata: [
-        { ID: "1", CAT: "TEST1", KEYW: "TESTING-1", DESC: "TESTING 123" },
-        { ID: "2", CAT: "TEST1", KEYW: "TESTING-2", DESC: "TESTING 345" },
-        { ID: "3", CAT: "TEST1", KEYW: "TESTING-3", DESC: "TESTING 456" },
-        { ID: "4", CAT: "TEST2", KEYW: "TESTING-4", DESC: "TESTING 789" },
-        { ID: "5", CAT: "TEST2", KEYW: "TESTING-5", DESC: "TESTING 111" },
-        { ID: "6", CAT: "TEST2", KEYW: "TESTING-6", DESC: "TESTING 222" },
-        { ID: "7", CAT: "TEST2", KEYW: "TESTING-7", DESC: "TESTING 333" },
-        { ID: "8", CAT: "TEST3", KEYW: "TESTING-8", DESC: "TESTING 444" },
-        { ID: "9", CAT: "TEST3", KEYW: "TESTING-9", DESC: "TESTING 555" },
-        { ID: "10", CAT: "TEST4", KEYW: "TESTING-10", DESC: "TESTING 666" },
-        { ID: "11", CAT: "TEST4", KEYW: "TESTING-11", DESC: "TESTING 777" },
-        { ID: "12", CAT: "TEST4", KEYW: "TESTING-12", DESC: "TESTING 888" }
-      ],
+        { ID: "1", CAT: "Personal", KEYW: "Buffet", 
+          REASON: "Under the leadership of Mr. Warren Buffet, a man I have always respected." },
+        { ID: "2", CAT: "Personal", KEYW: "Originated", 
+          REASON: "It was originally incorporated as Cornhusker Casualty Company in 1970 writing business in the state of Nebraska." },
+        { ID: "3", CAT: "Personal", KEYW: "Thoroughness", 
+          REASON: "One of the more thorough interview processes I have been though, in turn reflecting acquirment of adequate resources." },
+        { ID: "4", CAT: "Personal", KEYW: "Opportunity", 
+          REASON: "I am looking for a solid opportunity with a viable and growing organization like BHHC." },
+        { ID: "5", CAT: "Environment", KEYW: "Industry", 
+          REASON: "I appreciate the variance of industry that BHHC can provide." },
+        { ID: "6", CAT: "Environment", KEYW: "Omaha", 
+          REASON: "I enjoy working in the environment that Omaha can provide." },
+        { ID: "7", CAT: "Environment", KEYW: "Tech Stack", 
+          REASON: "The tech stack utilized at BHHC is something I am familiar with." },
+        { ID: "8", CAT: "Environment", KEYW: "National", 
+          REASON: "BHHC has expanded its footprint nationally with offices in San Francisco, Denver, and Omaha." },
+        { ID: "9", CAT: "Environment", KEYW: "Staying Power", 
+          REASON: "Local presence, combined with unparalleled financial strength, has resulted in knowledge, experience and staying power." },
+        { ID: "10", CAT: "Metric", KEYW: "Group", 
+          REASON: "BHHC is a group of six insurance carriers that are part of the Berkshire Hathaway group of insurance companies." },
+        { ID: "11", CAT: "Metric", KEYW: "Financial Strength", 
+          REASON: "Supported by A.M. Best's highest financial strength rating of A++ (Superior) (as of December 11, 2019)" },
+        { ID: "12", CAT: "Metric", KEYW: "Ownership", 
+          REASON: "Is part of the Berkshire Hathaway Inc umbrella that wholly owns GEICO, Duracell, Dairy Queen, BNSF, Lubrizol, Fruit of the Loom, Helzberg Diamonds, Long & Foster, FlightSafety International, Pampered Chef, and NetJets." }
+        ],
       overlayNoRowsTemplate: null,
       overlayLoadingTemplate: null,
       inputdisabled: false,
@@ -117,10 +129,10 @@ export default {
       horizontalheadericonwidth: "80px",
       horizontalheadericontop: "2px",
       horizontalheadericonleft: "5px",
-      horizontalheaderverbiagetop: "2px",
-      horizontalheaderverbiageleft: "85px",
-      horizontalheaderverbiageheight: "30px",
-      horizontalheaderverbiagewidth: "172px",
+      horizontalheaderverbiagetop: "80px",
+      horizontalheaderverbiageleft: "5px",
+      horizontalheaderverbiageheight: "400px",
+      horizontalheaderverbiagewidth: "80px",
       modal_id: "",
       modal_category: "",
       modal_keyword: "",
@@ -165,11 +177,12 @@ export default {
         filterParams: { clearButton: true }
       },
       {
-        headerName: "Description",
-        field: "DESC",
+        headerName: "Reason",
+        field: "REASON",
         sortable: true,
         filter: true,
-        filterParams: { clearButton: true }
+        filterParams: { clearButton: true },
+        width:1000
       }
     ];
     this.gridOptions.onRowClicked = function(row) {
@@ -178,7 +191,7 @@ export default {
       self.selectedid = row.data.ID; //Assign Modal Fields
       self.selectedcat = row.data.CAT;
       self.selectedkeyword = row.data.KEYW;
-      self.selecteddescription = row.data.DESC;
+      self.selecteddescription = row.data.REASON;
       setTimeout(function() {
         self.hideLoadingModal();
         //Detail Loaded - Display Detail Modal
@@ -186,14 +199,16 @@ export default {
       }, 1000);
     };
 
+    //Set transfer of row key
     this.gridOptions.getRowNodeId = item => {
       return item.ID;
     };
 
+    //Set Custom Grid Overlays
     this.overlayLoadingTemplate =
-      '<span style="padding: 10px; border: 0px solid #444;"><img src="/assets/clockloader.gif" /></span>';
+      '<span style="padding: 10px; border: 0px solid #444;"><img src="./assets/clockloader.gif" /></span>';
     this.overlayNoRowsTemplate =
-      '<span style="padding: 10px; border: 0px solid #444;"><img src="/assets/noresults.gif" /></span>';
+      '<span style="padding: 10px; border: 0px solid #444;"><img src="./assets/noresults.gif" /></span>';
 
     log.info('Configurations completed load');
   },
@@ -261,7 +276,7 @@ export default {
           node.data.ID.toLowerCase().includes(searchinput) ||
           node.data.KEYW.toLowerCase().includes(searchinput) ||
           node.data.CAT.toLowerCase().includes(searchinput) ||
-          node.data.DESC.toLowerCase().includes(searchinput)
+          node.data.REASON.toLowerCase().includes(searchinput)
         );
       } else {
         return true;

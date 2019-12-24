@@ -53,7 +53,7 @@ export default {
   top: 50px;
   margin-left: auto;
   margin-right: auto;
-  background-image: url("../assets/panda80.png");
+  background-image: url("../assets/bhhc-proj.png");
   background-position: center;
   background-repeat: no-repeat;
 }
